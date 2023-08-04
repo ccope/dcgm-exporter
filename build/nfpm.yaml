@@ -1,0 +1,26 @@
+# nfpm example configuration file
+#
+# check https://nfpm.goreleaser.com/configuration for detailed usage
+#
+name: "dcgm-exporter"
+arch: "amd64"
+platform: "linux"
+version: "v3.1.8"
+section: "default"
+priority: "extra"
+maintainer: "Cam Cope <ccope@crusoeenergy.com>"
+description: |
+    DCGM telemetry client for prometheus
+vendor: "Nvidia"
+homepage: "https://github.com/NVIDIA/dcgm-exporter"
+license: "Apache 2"
+contents:
+- src: ./cmd/dcgm-exporter/dcgm-exporter
+  dst: /usr/bin/dcgm-exporter
+- src: ./dcgm-exporter.service
+  dst: /etc/systemd/system/dcgm-exporter.service
+overrides:
+  deb:
+    scripts:
+      postinstall: ./postinstall.sh
+      preremove: ./preremove.sh
